@@ -5,11 +5,12 @@ const twit = new twiti(config);
 function retweet() {
     let params = {
         q: 'evleniyorum',
-        count: 5,
+        count: 10,
         result_type: 'recent',
     }
     twit.get('search/tweets', params, (err, data, response) => {
         let tweets = data.statuses
+        console.log(data)
         var sayac = 0;
         for (let dat of tweets) {
             let username = dat.user.screen_name
@@ -41,4 +42,4 @@ function retweet() {
         }
     })
 }
-setInterval(retweet, 3000)
+setInterval(retweet, 900000)
