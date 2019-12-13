@@ -12,7 +12,6 @@ function retweet() {
         let tweets = data.statuses
         var sayac = 0;
         for (let dat of tweets) {
-            console.log(dat)
             let username = dat.user.screen_name
             let tweetID = dat.id_str
             let reply = dat.in_reply_to_status_id_str
@@ -22,7 +21,7 @@ function retweet() {
                     in_reply_to_status_id: tweetID
                 }, function (err, data, response) {
                     if (err) {
-                        console.log("error girdi")
+                        console.log("error")
                     } else {
                         sayac = 1;
                         twit.post('favorites/create', {
@@ -35,7 +34,7 @@ function retweet() {
                                 console.log('FAVORITED... Success!!!');
                             }
                         })
-                        console.log(data.text + ' tweeted!')
+                        console.log(username + ' tweeted!')
                     }
                 })
             }
