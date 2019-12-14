@@ -17,12 +17,10 @@ cron.schedule("*/20 * * * *", () => {
         let tweets = data.statuses
         var sayac = 0;
         for (let dat of tweets) {
-            console.log(`sayac degeri : ${sayac}`)
             let username = dat.user.screen_name
             let tweetID = dat.id_str
             let reply = dat.in_reply_to_status_id_str
             if (!err && reply === null && sayac === 0) {
-                console.log(`sayac degeri : ${sayac} girdi`)
                 twit.post('statuses/update',
                     {
                         status: `@${username} Düğününde dijital davetiye oluşturmaya ne dersin? Hemen örnek bir davetiyeyi incele: davetiyem.co/damatgelin . Seni aramızda görmekten mutluluk duyarız.`,
@@ -35,18 +33,18 @@ cron.schedule("*/20 * * * *", () => {
                     .then(() => {
                         sayac = 1;
                         console.log(`sayac : ${sayac} degeri bu ve ${username} tweet atıldı`)
-                        twit.post('favorites/create',
-                            {
-                                id: tweetID
-                            }
-                        )
-                            .catch(() => {
-                                console.log('CANNOT BE FAVORITE... Error');
-                            })
-                            .then(() => {
-                                console.log('FAVORITED... Success!!!');
-                            })
                         console.log(username + ' tweeted!')
+                    })
+                twit.post('favorites/create',
+                    {
+                        id: tweetID
+                    }
+                )
+                    .catch(() => {
+                        console.log('CANNOT BE FAVORITE... Error');
+                    })
+                    .then(() => {
+                        console.log('FAVORITED... Success!!!');
                     })
 
             }
