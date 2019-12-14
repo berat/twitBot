@@ -12,5 +12,8 @@
   "devDependencies": {
     "express": "^4.17.1",
     "twit": "^2.2.11"
+  },
+  "dependencies": {
+    "cron": "^1.7.2"
   }
 }

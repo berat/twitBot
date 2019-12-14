@@ -1,4 +1,5 @@
 const express = require('express');
+const CronJob = require('cron').CronJob;
 const config = require('./config');
 const twiti = require('twit');
 
@@ -7,8 +8,8 @@ const app = express();
 
 
 app.get('/', (req, res) => {
-
-    function retweet() {
+    
+    new CronJob('*/15 * * * *', function() {
         let params = {
             q: 'evleniyorum',
             count: 10,
@@ -16,21 +17,23 @@ app.get('/', (req, res) => {
         }
         twit.get('search/tweets', params, (err, data, response) => {
             let tweets = data.statuses
-            console.log(data)
             var sayac = 0;
             for (let dat of tweets) {
+                console.log(`sayac degeri : ${sayac}`)
                 let username = dat.user.screen_name
                 let tweetID = dat.id_str
                 let reply = dat.in_reply_to_status_id_str
                 if (!err && reply === null && sayac === 0) {
+                    console.log(`sayac degeri : ${sayac} girdi`)
                     twit.post('statuses/update', {
-                        status: `@${username} Daha önce dijital davetiye oluşturmayı denedin mi? Hemen incelemek için aşağıdaki linke tıkla: davetiyem.co/damatgelin`,
+                        status: `@${username} düğününde dijital davetiye oluşturmaya ne dersin? Hemen örnek bir davetiyeyi incele: davetiyem.co/damatgelin`,
                         in_reply_to_status_id: tweetID
                     }, function (err, data, response) {
                         if (err) {
                             console.log("error")
                         } else {
                             sayac = 1;
+                            console.log(`sayac : ${sayac} degeri bu ve ${username} tweet atıldı`)
                             twit.post('favorites/create', {
                                 id: tweetID
                             }, function (errorr, dataa, responsee) {
@@ -47,8 +50,7 @@ app.get('/', (req, res) => {
                 }
             }
         })
-    }
-    setInterval(retweet, 900000)
+    }, null, true, 'Europe/Istanbul');
 
 
 })
