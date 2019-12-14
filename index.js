@@ -58,7 +58,7 @@ cron.schedule("*/20 * * * *", () => {
 })
 // configure routes
 app.get("/", (req, res) => {
-    res.send("15 dakikada bir bot çalışıyor")
+    res.send("20 dakikada bir bot çalışıyor")
 })
 // start the server
 app.listen(port, () => console.log(`Server: PORT ${port} active`))
