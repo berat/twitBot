@@ -1,3 +1,5 @@
+'use strict';
+
 const cron = require('node-cron')
 const express = require('express')
 const config = require('./config');
@@ -5,7 +7,9 @@ const twiti = require('twit');
 
 const twit = new twiti(config);
 const app = express();
-const port = 3000
+
+const port = process.env.PORT || 8080;
+
 // setup cron job
 cron.schedule("*/20 * * * *", () => {
     let params = {
