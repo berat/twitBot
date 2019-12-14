@@ -25,27 +25,28 @@ cron.schedule("*/20 * * * *", () => {
                     {
                         status: `@${username} Düğününde dijital davetiye oluşturmaya ne dersin? Hemen örnek bir davetiyeyi incele: davetiyem.co/damatgelin . Seni aramızda görmekten mutluluk duyarız.`,
                         in_reply_to_status_id: tweetID
-                    }
-                )
-                    .catch(() => {
+                    }, (err,data) => {
+                
+                    if(err) {
                         console.log("error")
-                    })
-                    .then(() => {
+                    }
+                    else{
                         sayac = 1;
                         console.log(`sayac : ${sayac} degeri bu ve ${username} tweet atıldı`)
                         console.log(username + ' tweeted!')
-                    })
+                    }
+                })
                 twit.post('favorites/create',
                     {
                         id: tweetID
-                    }
-                )
-                    .catch(() => {
+                    }, (error, dataa) => {
+                    if(error) {
                         console.log('CANNOT BE FAVORITE... Error');
-                    })
-                    .then(() => {
+                    }
+                    else{
                         console.log('FAVORITED... Success!!!');
-                    })
+                    }
+                })
 
             }
         }
